@@ -1,0 +1,952 @@
+
+<!DOCTYPE html>
+<html lang="zh-cn">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<meta name="referrer" content="same-origin" />
+<title>【十分钟教会你汇编】MIPS编程入门（妈妈说标题要高大上，才会有人看&gt;_&lt;！） - thoupin - 博客园</title>
+<link type="text/css" rel="stylesheet" href="/bundles/blog-common.css?v=-hy83QNg62d4qYibixJzxMJkbf1P9fTBlqv7SK5zVL01"/>
+<link id="MainCss" type="text/css" rel="stylesheet" href="/skins/AnotherEon001/bundle-AnotherEon001.css?v=dNz80TfH9-81kuLR86t4JWgT2tb_J0B779DQM4kw0WU1"/>
+<link id="mobile-style" media="only screen and (max-width: 767px)" type="text/css" rel="stylesheet" href="/skins/AnotherEon001/bundle-AnotherEon001-mobile.css?v=14BbNtH7YBR-xq4qqgoRH59g81h19XFR_pQeS0AdJok1"/>
+<link title="RSS" type="application/rss+xml" rel="alternate" href="http://www.cnblogs.com/thoupin/rss"/>
+<link title="RSD" type="application/rsd+xml" rel="EditURI" href="http://www.cnblogs.com/thoupin/rsd.xml"/>
+<link type="application/wlwmanifest+xml" rel="wlwmanifest" href="http://www.cnblogs.com/thoupin/wlwmanifest.xml"/>
+<script src="//common.cnblogs.com/scripts/jquery-2.2.0.min.js"></script>
+<script type="text/javascript">var currentBlogApp = 'thoupin', cb_enable_mathjax=false;var isLogined=false;</script>
+<script src="/bundles/blog-common.js?v=taItysi72HxMPeH9Xg5nAYabRul6hhgahi3tVIMIKV81" type="text/javascript"></script>
+</head>
+<body>
+<a name="top"></a>
+
+<div id="wrapper">
+<div id="header">
+
+<div id="top">
+<h1><a id="Header1_HeaderTitle" class="headermaintitle" href="http://www.cnblogs.com/thoupin/">thoupin</a></h1>
+<div id="subtitle"></div>
+</div>
+<div id="sub"><div id="blog_stats">
+<div class="BlogStats">随笔 - 33, 文章 - 3, 评论 - 39, 引用 - 0</div>
+</div></div>
+
+
+
+</div>
+<div id="main_container">
+<div id="main_content">
+<div id="content">
+	
+<div id="post_detail">
+	<div class="post">
+		<h2>
+			<a id="cb_post_title_url" href="http://www.cnblogs.com/thoupin/p/4018455.html">【十分钟教会你汇编】MIPS编程入门（妈妈说标题要高大上，才会有人看&gt;_&lt;！）</a>
+		</h2>
+		<div class="postbody">
+		<div id="cnblogs_post_body" class="blogpost-body"><p>　　无意中找到一篇十分好用，而且篇幅也不是很大的入门教程，通篇阅后，再把&ldquo;栗子&rdquo;敲一遍，基本可以有一个比较理性的认识，从而方便更好地进一步深入学习。</p>
+<p>废话不多说，上干货（英语好的直接跳过本人的渣翻译了哈&mdash;&mdash;！纯本人手打原创，有错请指教，要转载请声明出处，谢~~）：</p>
+<p>&nbsp;</p>
+<h2 style="text-align: center;"><span style="color: #888888;"><em>MIPS Architecture and Assembly Language Overview</em></span></h2>
+<h2 style="text-align: center;">MIPS架构及其汇编初步</h2>
+<p>&nbsp;</p>
+<p><span style="background-color: #ffffff;"><strong><span style="color: #888888; font-size: 16px;">（开始之前稍微再提下，整体分为4个结构：）</span></strong></span></p>
+<p><span style="background-color: #ffff00;"><strong><span style="color: #888888; font-size: 16px;">　　1： 寄存器种类；</span></strong></span></p>
+<p><span style="background-color: #ffff00;"><strong><span style="color: #888888; font-size: 16px;">　　2： 算术及寻址指令</span></strong></span></p>
+<p><span style="background-color: #ffff00;"><strong><span style="color: #888888; font-size: 16px;">　　3： 程序结构</span></strong></span></p>
+<p><span style="background-color: #ffff00;"><strong><span style="color: #888888; font-size: 16px;">　　4： 系统调用&nbsp;</span></strong></span></p>
+<h3><span style="color: #888888;"><em>Data Types and Literals</em></span></h3>
+<h3>数据类型</h3>
+<ul>
+<li>所有MIPS指令都是32位长的</li>
+<li>各单位：1字节=8位，半字长=2个字节，1字长=4个字节</li>
+<li>一个字符空间=1个字节</li>
+<li>一个整型=一个字长=4个字节</li>
+<li>单个字符用单引号，例如：'b'</li>
+<li>字符串用双引号，例如："A string"</li>
+</ul>
+<h3><span style="color: #888888;"><em>Registers</em></span></h3>
+<h3>寄存器</h3>
+<ul>
+<ul>
+<ul>
+<li>MIPS下一共有32个通用寄存器</li>
+<li>在汇编中，寄存器标志由$符开头<span style="color: #888888;"><em><br /></em></span></li>
+<li>寄存器表示可以有两种方式</li>
+</ul>
+</ul>
+</ul>
+<ul>
+<ul>
+<ul>
+<li>直接使用该寄存器对应的编号，例如：从$0到$31</li>
+<li>使用对应的寄存器名称，例如：$t1, $sp(详细含义，下文有表格</li>
+</ul>
+</ul>
+<ul>对于乘法和除法分别有对应的两个寄存器$lo, $hi
+<ul>
+<li>对于以上二者，不存在直接寻址；必须要通过mfhi("move from hi")以及mflo("move from lo")分别来进行访问对应的内容</li>
+<li>栈的走向是从高地址到低地址</li>
+</ul>
+</ul>
+</ul>
+<div align="left">MIPS下各个寄存器编号及描述：<br />
+<table style="width: 661px;" border="1" align="center">
+<tbody>
+<tr><th width="69">
+<p><em>Register</em><br /><em>Number</em></p>
+<p>寄存器编号</p>
+
+</th><th width="92">
+<p><em>Alternative&nbsp;</em><br /><em>Name</em></p>
+<p>寄存器名</p>
+
+</th><th width="412">
+<p><em>Description</em></p>
+<p>寄存器用途</p>
+
+</th></tr>
+<tr>
+<td width="69">
+<div align="center"><em>0</em></div>
+
+</td>
+<td width="92">
+<div align="center"><em>zero</em></div>
+
+</td>
+<td width="412">
+<p><em>the value 0</em></p>
+<p>永远返回零</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69">
+<div align="center"><em><span style="color: #666666;">1</span></em></div>
+
+</td>
+<td width="92">
+<div align="center"><em><span style="color: #666666;">$at</span></em></div>
+
+</td>
+<td width="412">
+<p><em><span style="color: #666666;">(<strong>a</strong>ssembler&nbsp;<strong>t</strong>emporary) reserved by the assembler</span></em></p>
+<p><span style="color: #666666;">汇编保留寄存器（不可做其他用途）</span></p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69">
+<div align="center"><em>2-3</em></div>
+
+</td>
+<td width="92">
+<div align="center"><em>$v0 - $v1</em></div>
+
+</td>
+<td width="412">
+<p><span style="color: #888888;"><em>(<strong>v</strong>alues) from expression evaluation and function results</em></span></p>
+<p>（<strong>V</strong>alue简写）存储表达式或者是函数的返回值</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69">
+<div align="center"><em>4-7</em></div>
+
+</td>
+<td width="92">
+<div align="center"><em>$a0 - $a3</em></div>
+
+</td>
+<td width="412">
+<p><span style="color: #888888;"><em>(<strong>a</strong>rguments) First four parameters for subroutine.</em></span><br /><span style="color: #888888;"><em>Not preserved across procedure calls</em></span></p>
+<p>（<strong>A</strong>rgument简写）存储子程序的前4个参数，在子程序调用过程中释放</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69">
+<div align="center"><em>8-15</em></div>
+
+</td>
+<td width="92">
+<div align="center"><em>$t0 - $t7</em></div>
+
+</td>
+<td width="412">
+<p><span style="color: #888888;"><em>(<strong>t</strong>emporaries) Caller saved if needed. Subroutines can use w/out saving.</em></span><br /><span style="color: #888888;"><em>Not preserved across procedure calls</em></span></p>
+<p>（<strong>T</strong>emp简写）临时变量，同上调用时不保存</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69">
+<div align="center"><em>16-23</em></div>
+
+</td>
+<td width="92">
+<div align="center"><em>$s0 - $s7</em></div>
+
+</td>
+<td width="412">
+<p><span style="color: #888888;"><em>(<strong>s</strong>aved values) - Callee saved.&nbsp;</em></span><br /><span style="color: #888888;"><em>A subroutine using one of these must save original and restore it before exiting.</em></span><br /><span style="color: #888888;"><em>Preserved across procedure calls</em></span></p>
+<p>（<strong>S</strong>aved or <strong>S</strong>tatic简写？）静态变量？调用时保存</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69" height="48">
+<div align="center"><em>24-25</em></div>
+
+</td>
+<td width="92" height="48">
+<div align="center"><em>$t8 - $t9</em></div>
+
+</td>
+<td width="412" height="48">
+<p><span style="color: #888888;"><em>(<strong>t</strong>emporaries) Caller saved if needed. Subroutines can use w/out saving.</em></span><br /><span style="color: #888888;"><em>These are in addition to $t0 - $t7 above.</em></span><br /><span style="color: #888888;"><em>Not preserved across procedure calls.</em></span></p>
+<p>（<strong>T</strong>emp简写）算是前面$0~$7的一个继续，属性同$t0~$t7</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69">
+<div align="center"><em>26-27</em></div>
+
+</td>
+<td width="92">
+<div align="center"><em>$k0 - $k1</em></div>
+
+</td>
+<td width="412">
+<p><span style="color: #888888;"><em>reserved for use by the interrupt/trap handler</em></span></p>
+<p>（brea<strong>K</strong> off简写？）中断函数返回值，不可做其他用途</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69">
+<div align="center"><em>28</em></div>
+
+</td>
+<td width="92">
+<div align="center"><em>$gp</em></div>
+
+</td>
+<td width="412">
+<p><span style="color: #888888;"><em><strong>g</strong>lobal&nbsp;<strong>p</strong>ointer.&nbsp;</em></span><br /><span style="color: #888888;"><em>Points to the middle of the 64K block of memory in the static data segment.</em></span></p>
+<p><em>（<strong>G</strong>lobal <strong>P</strong>ointer简写）指向64k(2^16)大小的静态数据块的中间地址（字面上好像就是这个意思，块的中间）</em></p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69">
+<div align="center"><em>29</em></div>
+
+</td>
+<td width="92">
+<div align="center"><em>$sp</em></div>
+
+</td>
+<td width="412">
+<p><span style="color: #888888;"><em><strong>s</strong>tack&nbsp;<strong>p</strong>ointer&nbsp;</em></span><br /><span style="color: #888888;"><em>Points to last location on the stack.</em></span></p>
+<p><em>(</em><strong>S</strong>tack <strong>P</strong>ointer简写）栈指针，指向的是栈顶</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69">
+<div align="center"><em>30</em></div>
+
+</td>
+<td width="92">
+<div align="center"><em>$s8/$fp</em></div>
+
+</td>
+<td width="412">
+<p><span style="color: #888888;"><em><strong>s</strong>aved value /&nbsp;<strong>f</strong>rame&nbsp;<strong>p</strong>ointer</em></span><br /><span style="color: #888888;"><em>Preserved across procedure calls</em></span></p>
+<p>(<strong>S</strong>aved/<strong>F</strong>rame <strong>P</strong>ointer简写)帧指针</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="69">
+<div align="center"><em>31</em></div>
+
+</td>
+<td width="92">
+<div align="center"><em>$ra</em></div>
+
+</td>
+<td width="412">
+<p><span style="color: #888888;"><em><strong>r</strong>eturn&nbsp;<strong>a</strong>ddress</em></span></p>
+<p>返回地址，目测也是不可做其他用途</p>
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+<p>&nbsp;</p>
+<h2><span style="color: #888888;"><em>Program Structure</em></span></h2>
+<h2>程序结构</h2>
+<ul>
+<li>本质其实就只是数据声明+普通文本+程序编码（文件后缀为.s，或者.asm也行）</li>
+<li>数据声明在代码段之后（其实在其之前也没啥问题，也更符合高级程序设计的习惯）</li>
+
+</ul>
+<h3><span style="color: #888888;">Data Declarations</span></h3>
+<h3>数据声明</h3>
+<ul>
+<li>数据段以<strong> .data</strong>为开始标志</li>
+<li>声明变量后，即在主存中分配空间。</li>
+
+</ul>
+<h3><span style="color: #888888;">Code</span></h3>
+<h3>代码</h3>
+<ul>
+<li>代码段以<strong> .text</strong>为开始标志</li>
+<li>其实就是各项指令操作</li>
+<li>程序入口为<strong>main：</strong>标志（这个都一样啦）</li>
+<li>程序结束标志（详见下文）</li>
+
+</ul>
+<h3><span style="color: #888888;">Comments</span></h3>
+<h3><span style="color: #000000;">注释</span></h3>
+<ul>
+<li>同C系语言<span style="color: #888888;"><br /></span></li>
+<li>
+<ul>
+<li style="list-style-type: none;">
+<ul>
+<li>MIPS程序的基本模板如下：
+<pre>#<span style="color: #888888;"> Comment giving name of program and description of function</span><br /># 说明下程序的目的和作用（其实和高级语言都差不多了）
+# <span style="color: #888888;">Template.s
+#Bare-bones outline of MIPS assembly language program</span><br />
+
+           <span style="color: #888888;">.data  </span>     #<span style="color: #888888;"> variable declarations follow this line</span><br />　　　　                # 数据变量声明
+                       # ...
+														
+           .<span style="color: #888888;">text       # instructions follow this line	</span>
+		       # 代码段部分															
+<span style="color: #888888;">main:                  # indicates start of code (first instruction to execute)</span><br />                       # 主程序
+                       # ...
+									
+<span style="color: #888888;"># End of program, leave a blank line afterwards to make SPIM happy</span><br /># 必须多给你一行，你才欢？</pre>
+</li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+<p>　　</p>
+<h2><span style="color: #888888;">Data Declarations</span></h2>
+<h2>数据声明</h2>
+<blockquote>
+<p><span style="color: #888888;">format for declarations:</span></p>
+<p>声明的格式：</p>
+</blockquote>
+<blockquote>
+<pre><span style="color: #888888;">name:	                storage_type	value(s)</span>	<br />变量名：（冒号别少了）     数据类型         变量值     </pre>
+</blockquote>
+<ul>
+<ul>
+<li><span style="color: #888888;">create storage for variable of specified type with given name and specified value</span></li>
+<li><span style="color: #888888;">value(s) usually gives initial value(s); for storage type .space, gives number of spaces to be allocated</span></li>
+<li>通常给变量赋一个初始值；对于<strong>.space</strong>,需要指明需要多少大小空间（bytes)</li>
+</ul>
+</ul>
+<blockquote>
+<p><span style="color: #888888;">Note: labels always followed by colon ( : )</span></p>
+<blockquote>
+<pre><span style="color: #888888;">example
+	
+var1:		.word	3	# create a single integer variable with initial value 3</span><br />　　　　　　　　　　　　　　　　　　 # 声明一个 word 类型的变量 var1, 同时给其赋值为 3
+<span style="color: #888888;">array1:		.byte	'a','b'	# create a 2-element character array with elements initialized</span>
+				#   to  a  and  b<br />　　　　　　　　　　　　　　　　　　 # 声明一个存储2个字符的数组 array1，并赋值 'a', 'b'
+<span style="color: #888888;">array2:		.space	40	# allocate 40 consecutive bytes, with storage uninitialized
+				#   could be used as a 40-element character array, or a
+				#   10-element integer array; a comment should indicate which!	</span><br />　　　　　　　　　　　　　　　　　　 # 为变量 array2 分配 40字节（bytes)未使用的连续空间，当然，对于这个变量<br />　　　　　　　　　　　　　　　　　　 # 到底要存放什么类型的值， 最好事先声明注释下！</pre>
+</blockquote>
+</blockquote>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<p>&nbsp;</p>
+<h3><span style="color: #888888;">Load / Store Instructions</span></h3>
+<h3>加载/保存(也许这里写成读取/写入 可能更易理解一点) 指令集</h3>
+<ul>
+<li>如果要访问内存，不好意思，你只能用 <strong>load</strong> 或者<strong> store</strong> 指令</li>
+<li>其他的只能都一律是寄存器操作</li>
+</ul>
+<p><span style="text-decoration: underline; color: #888888;">load:</span></p>
+<pre><span style="color: #888888;">	lw	register_destination, RAM_source</span></pre>
+<blockquote>
+<blockquote>
+<p><span style="color: #888888;">#copy word (4 bytes) at source RAM location to destination register.</span></p>
+<p>从内存中 复制 RAM_source 的内容到 对应的寄存器中</p>
+<p>（lw中的'w'意为'word',即该数据大小为4个字节）</p>
+</blockquote>
+</blockquote>
+<blockquote>
+<pre><span style="color: #888888;">	lb	register_destination, RAM_source</span></pre>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><span style="color: #888888;">#copy byte at source RAM location to low-order byte of destination register,</span><br /><span style="color: #888888;"># and sign-e.g.tend to higher-order bytes</span></p>
+<p>同上， lb 意为 load byte</p>
+
+</blockquote>
+
+</blockquote>
+<p><span style="text-decoration: underline; color: #888888;">store word:</span></p>
+<blockquote>
+<pre><span style="color: #888888;">	sw	register_source, RAM_destination</span></pre>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><span style="color: #888888;">#store word in source register into RAM destination</span></p>
+<p>#将指定寄存器中的数据 写入 到指定的内存中</p>
+</blockquote>
+</blockquote>
+<pre><span style="color: #888888;">	sb	register_source, RAM_destination</span></pre>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><span style="color: #888888;">#store byte (low-order) in source register into RAM destination</span></p>
+</blockquote>
+</blockquote>
+</blockquote>
+<p><span style="text-decoration: underline; color: #888888;">load immediate:</span></p>
+<blockquote>
+<pre><span style="color: #888888;">	li	register_destination, value</span></pre>
+</blockquote>
+</blockquote>
+<blockquote>
+<blockquote>
+<blockquote>
+<p><span style="color: #888888;">#load immediate value into destination register</span></p>
+<p>顾名思义，这里的 li 意为 load immediate</p>
+</blockquote>
+</blockquote>
+</blockquote>
+<blockquote>
+<p>&nbsp;</p>
+<pre><span style="color: #888888;">example:
+	.data
+var1:	.word	23		# declare storage for var1; initial value is 23</span>
+　　　　　　　　　　　　　　　　　　 # 先声明一个 word 型的变量 var1 = 3;
+	<span style="color: #888888;">.text
+__start:
+	lw	$t0, var1	# load contents of RAM location into register $t0:  $t0 = var1</span><br />　　　　　　　　　　　　　　　　　　 # 令寄存器 $t0 = var1 = 3;
+	<span style="color: #888888;">li	$t1, 5		# $t1 = 5   ("load immediate")</span><br />　　　　　　　　　　　　　　　　　　 # 令寄存器 $t1 = 5;
+	<span style="color: #888888;">sw	$t1, var1	# store contents of register $t1 into RAM:  var1 = $t1</span><br />　　　　　　　　　　　　　　　　　　 # 将var1的值修改为$t1中的值： var1 = $t1 = 5;
+	<span style="color: #888888;">done
+
+
+</span></pre>
+</blockquote>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<h3><span style="color: #888888;">Indirect and Based Addressing</span></h3>
+<h3>立即与间接寻址</h3>
+<p><span style="text-decoration: underline; color: #888888;">load address:</span></p>
+<p><span style="text-decoration: underline;">直接给地址</span></p>
+<pre>	la	$t0, var1</pre>
+<ul>
+<li><span style="color: #888888;">copy RAM address of var1 (presumably a label defined in the program) into register $t0</span></li>
+</ul>
+<p><span style="text-decoration: underline; color: #888888;">indirect addressing:</span></p>
+<p><span style="text-decoration: underline;">地址是寄存器的内容（可以理解为指针）</span></p>
+<pre>	lw	$t2, ($t0)</pre>
+<ul>
+<li>l<span style="color: #888888;">oad word at RAM address contained in $t0 into $t2</span></li>
+</ul>
+<pre>	sw	$t2, ($t0)</pre>
+<ul>
+<li>store word in register $t2 into RAM at address contained in $t0</li>
+</ul>
+<p><span style="text-decoration: underline; color: #888888;">based or indexed addressing：</span></p>
+<p><span style="text-decoration: underline;">+偏移量</span></p>
+<pre>	lw	$t2, 4($t0)</pre>
+<ul>
+<li><span style="color: #888888;">load word at RAM address ($t0+4) into register $t2</span></li>
+<li><span style="color: #888888;">"4" gives offset from address in register $t0</span></li>
+</ul>
+<pre>	sw	$t2, -12($t0)</pre>
+<ul>
+<li><span style="color: #888888;">store word in register $t2 into RAM at address ($t0 - 12)</span></li>
+<li><span style="color: #888888;">negative offsets are fine</span></li>
+</ul>
+<p><span style="color: #888888;">Note: based addressing is especially useful for:</span></p>
+<p>不必多说，要用到偏移量的寻址，基本上使用最多的场景无非两种：数组，栈。</p>
+<ul>
+<li><span style="color: #888888;">arrays; access elements as offset from base address</span></li>
+<li><span style="color: #888888;">stacks; easy to access elements at offset from stack pointer or frame pointer</span></li>
+</ul>
+<p>&nbsp;</p>
+<pre>example：<br />栗子：
+
+<span style="color: #888888;">		.data
+array1:		.space	12		#  declare 12 bytes of storage to hold array of 3 integers</span><br />　　　　　　　　　　　　　　　　　　　　　　　 #  定义一个 12字节 长度的数组 array1, 容纳 3个整型
+<span style="color: #888888;">		.text
+__start:	la	$t0, array1	#  load base address of array into register $t0</span><br />　　　　　　　　　　　　　　　　　　　　　　　 #  让 $t0 = 数组首地址
+		<span style="color: #888888;">li	$t1, 5		#  $t1 = 5   ("load immediate")
+		sw $t1, ($t0)		#  first array element set to 5; indirect addressing</span><br />　　　　　　　　　　　　　　　　　　　　　　　　# 对于 数组第一个元素赋值 array[0] = $1 = 5
+	<span style="color: #888888;">	li $t1, 13		#   $t1 = 13
+		sw $t1, 4($t0)		#  second array element set to 13</span><br />　　　　　　　　　　　　　　　　　　　　　　　　# 对于 数组第二个元素赋值 array[1] = $1 = 13 <br />　　　　　　　　　　　　　　　　　　　　　　　　# (该数组中每个元素地址相距长度就是自身数据类型长度，即4字节， 所以对于array+4就是array[1])
+	<span style="color: #888888;">	li $t1, -7		#   $t1 = -7
+		sw $t1, 8($t0)		#  third array element set to -7</span><br />　　　　　　　　　　　　　　　　　　　　　　　　# 同上， array+8 = （address[array[0])+4）+ 4 = address(array[1]) + 4 = address(array[2])
+		<span style="color: #888888;">done
+</span></pre>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<h3><span style="color: #888888;">Arithmetic Instructions</span></h3>
+<h3>算术指令集</h3>
+<ul>
+<li>最多3个操作数</li>
+<li>再说一遍，在这里，操作数只能是寄存器，绝对不允许出现地址</li>
+<li>所有指令统一是32位 = 4 * 8 bit = 4bytes = 1 word</li>
+</ul>
+<p>&nbsp; <span style="color: #888888;">add $t0,$t1,$t2 # $t0 = $t1 + $t2; add as signed (2's complement) integers</span></p>
+<pre><span style="color: #888888;">		sub	$t2,$t3,$t4	#  $t2 = $t3 &ETH; $t4
+		addi	$t2,$t3, 5	#  $t2 = $t3 + 5;   "add immediate" (no sub immediate)
+		addu	$t1,$t6,$t7	#  $t1 = $t6 + $t7;   add as unsigned integers
+		subu	$t1,$t6,$t7	#  $t1 = $t6 + $t7;   subtract as unsigned integers
+
+		mult	$t3,$t4		#  multiply 32-bit quantities in $t3 and $t4, and store 64-bit
+					#  result in special registers Lo and Hi:  (Hi,Lo) = $t3 * $t4</span><br />　　　　　　　　　　　　　　　　　　　　　　　　　运算结果存储在hi,lo（hi高位数据， lo地位数据）
+		<span style="color: #888888;">div	$t5,$t6		#  Lo = $t5 / $t6   (integer quotient)
+					#  Hi = $t5 mod $t6   (remainder)</span><br />　　　　　　　　　　　　　　　　　　　　　　　　　商数存放在 lo, 余数存放在 hi
+		<span style="color: #888888;">mfhi	$t0		#  move quantity in special register Hi to $t0:   $t0 = Hi</span><br />　　　　　　　　　　　　　　　　　　　　　　　　  不能直接获取 hi 或 lo中的值， 需要mfhi, mflo指令传值给寄存器
+		<span style="color: #888888;">mflo	$t1		#  move quantity in special register Lo to $t1:   $t1 = Lo
+					#  used to get at result of product or quotient</span><br /><span style="color: #888888;">
+		move	$t2,$t3	#  $t2 = $t3
+
+
+</span></pre>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<h3><span style="color: #888888;">Control Structures</span></h3>
+<h3>控制流</h3>
+<blockquote>
+<p><span style="text-decoration: underline; color: #888888;">Branches</span></p>
+<p><span style="text-decoration: underline;">分支（if else系列）</span></p>
+<ul>
+<li><span style="color: #888888;">comparison for conditional branches is built into instruction</span></li>
+</ul>
+<pre><span style="color: #888888;">		b	target		#  unconditional branch to program label target
+		beq	$t0,$t1,target	#  branch to target if  $t0 = $t1
+		blt	$t0,$t1,target	#  branch to target if  $t0 &lt; $t1
+		ble	$t0,$t1,target	#  branch to target if  $t0 &lt;= $t1
+		bgt	$t0,$t1,target	#  branch to target if  $t0 &gt; $t1
+		bge	$t0,$t1,target	#  branch to target if  $t0 &gt;= $t1
+		bne	$t0,$t1,target	#  branch to target if  $t0 &lt;&gt; $t1
+</span></pre>
+<p><span style="text-decoration: underline; color: #888888;">Jumps</span></p>
+<p><span style="text-decoration: underline;">跳转（while, for, goto系列）</span></p>
+<pre><span style="color: #888888;">		j	target	　　　　 #  unconditional jump to program label target</span><br />　　　　　　　　　　　　　　　　　　　　　　　    看到就跳， 不用考虑任何条件<br /><span style="color: #888888;">		jr	$t3		#  jump to address contained in $t3 ("jump register")</span><br />　　　　　　　　　　　　　　　　　　　　　　　　　 类似相对寻址，跳到该寄存器给出的地址处</pre>
+<p><span style="text-decoration: underline; color: #888888;">Subroutine Calls</span></p>
+<p><span style="text-decoration: underline;">子程序调用</span></p>
+<p><span style="color: #888888;">subroutine call: "jump and link" instruction</span></p>
+<pre><span style="color: #888888;">	jal	sub_label	#  "jump and link"</span></pre>
+<ul>
+<li><span style="color: #888888;">copy program counter (return address) to register $ra (return address register)</span></li>
+<li>将当前的程序计数器保存到 $ra 中</li>
+<li><span style="color: #888888;">jump to program statement at sub_label</span></li>
+</ul>
+<p><span style="color: #888888;">subroutine return: "jump register" instruction</span></p>
+<pre><span style="color: #888888;">	jr	$ra	#  "jump register"</span></pre>
+<ul>
+<li><span style="color: #888888;">jump to return address in $ra (stored by jal instruction)</span></li>
+<li>通过上面保存在 &nbsp;$ra 中的计数器返回调用前</li>
+</ul>
+<p><span style="color: #888888;">Note: return address stored in register $ra; if subroutine will call other subroutines, or is recursive, return address should be copied from $ra onto stack to preserve it, since jal always places return address in this register and hence will overwrite previous value</span></p>
+<p>如果说调用的子程序中有调用了其他子程序，如此往复， 则返回地址的标记就用 栈（stack） 来存储, 毕竟 $ra 只有一个， （哥哥我分身乏术啊~~）。</p>
+</blockquote>
+<p>&nbsp;</p>
+<hr />
+<p>&nbsp;</p>
+<h3><a name="IOSystemCalls"></a><span style="color: #888888;">System Calls and I/O (SPIM Simulator)</span></h3>
+<h3>&nbsp; 系统调用 与 输入/输出(主要针对SPIM模拟器）</h3>
+<h3>&nbsp;（本人使用的是Mars 4.4，也通用--！)</h3>
+<p>&nbsp;</p>
+<ul>
+<li>通过系统调用实现终端的输入输出，以及声明程序结束</li>
+<li>学会使用 syscall</li>
+<li>参数所使用的寄存器：$v0， $a0, &nbsp;$a1</li>
+<li>返回值使用： $v0</li>
+</ul>
+<blockquote>
+<p><em id="__mceDel" style="line-height: 1.5;">下表给出了系统调用中对应功能，代码，参数机返回值</em></p>
+</blockquote>
+<table border="1" align="center">
+<tbody>
+<tr><th width="80">Service</th><th width="54">
+<p>Code<br />in $v0</p>
+<p>对应功能的调用码</p>
+
+</th><th width="271">
+<p>Arguments</p>
+<p>所需参数</p>
+
+</th><th width="172">
+<p>Results</p>
+<p>返回值</p>
+
+</th></tr>
+<tr>
+<td width="80">
+<p><span style="color: #888888;">print_int</span></p>
+<p>打印一个整型</p>
+
+</td>
+<td width="54">
+<div align="center">$v0 = 1</div>
+
+</td>
+<td width="271">
+<p><span style="color: #888888;">$a0 = integer to be printed</span></p>
+<p>将要打印的整型赋值给 $a0</p>
+
+</td>
+<td width="172">&nbsp;</td>
+
+</tr>
+<tr>
+<td width="80">
+<p><span style="color: #888888;">print_float</span></p>
+<p>打印一个浮点</p>
+
+</td>
+<td width="54">
+<div align="center">$v0 = 2</div>
+
+</td>
+<td width="271">
+<p><span style="color: #888888;">$f12 = float to be printed</span></p>
+<p>将要打印的浮点赋值给 $f12</p>
+
+</td>
+<td width="172">&nbsp;</td>
+
+</tr>
+<tr>
+<td width="80">
+<p><span style="color: #888888;">print_double</span></p>
+<p>打印双精度</p>
+
+</td>
+<td width="54">
+<div align="center">$v0 = 3</div>
+
+</td>
+<td width="271">
+<p><span style="color: #888888;">$f12 = double to be printed</span></p>
+<p>将要打印的双精度赋值给 $f12</p>
+
+</td>
+<td width="172">&nbsp;</td>
+
+</tr>
+<tr>
+<td width="80"><span style="color: #888888;">print_string</span></td>
+<td width="54">
+<div align="center">$v0 = 4</div>
+
+</td>
+<td width="271">
+<p><span style="color: #888888;">$a0 = address of string in memory</span></p>
+<p>将要打印的字符串的地址赋值给 $a0</p>
+
+</td>
+<td width="172">&nbsp;</td>
+
+</tr>
+<tr>
+<td width="80"><span style="color: #888888;">read_int</span></td>
+<td width="54">
+<div align="center">$v0 = 5</div>
+
+</td>
+<td width="271">&nbsp;</td>
+<td width="172">
+<p><span style="color: #888888;">integer returned in $v0</span></p>
+<p>将读取的整型赋值给 $v0</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="80">
+<p><span style="color: #888888;">read_float</span></p>
+<p>读取浮点</p>
+
+</td>
+<td width="54">
+<div align="center">$v0 = 6</div>
+
+</td>
+<td width="271">&nbsp;</td>
+<td width="172">
+<p><span style="color: #888888;">float returned in $v0</span></p>
+<p>将读取的浮点赋值给 $v0</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="80">
+<p><span style="color: #888888;">read_double</span></p>
+<p>读取双精度</p>
+
+</td>
+<td width="54">
+<div align="center">$v0 = 7</div>
+
+</td>
+<td width="271">&nbsp;</td>
+<td width="172">
+<p><span style="color: #888888;">double returned in $v0</span></p>
+<p>将读取的双精度赋值给 $v0</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="80">
+<p><span style="color: #888888;">read_string</span></p>
+<p>读取字符串</p>
+
+</td>
+<td width="54">
+<div align="center">$v0 = 8</div>
+
+</td>
+<td width="271">
+<p><span style="color: #888888;">$a0 = memory address of string input buffer</span></p>
+<p><span style="color: #888888;">将读取的字符串地址赋值给 $a0</span><br /><span style="color: #888888;">$a1 = length of string buffer (n)</span></p>
+<p>将读取的字符串长度赋值给 $a1</p>
+
+</td>
+<td width="172">&nbsp;</td>
+
+</tr>
+<tr>
+<td width="80">
+<p><span style="color: #888888;">sbrk</span></p>
+<p>应该同C中的sbrk()函数</p>
+<p>动态分配内存</p>
+
+</td>
+<td width="54">
+<div align="center">$v0 = 9</div>
+
+</td>
+<td width="271">
+<p><span style="color: #888888;">$a0 = amount</span></p>
+<p>需要分配的空间大小（单位目测是字节 bytes）</p>
+
+</td>
+<td width="172">
+<p><span style="color: #888888;">address in $v0</span></p>
+<p>将分配好的空间首地址给 $v0</p>
+
+</td>
+
+</tr>
+<tr>
+<td width="80">
+<p><span style="color: #888888;">exit</span></p>
+<p>退出</p>
+
+</td>
+<td width="54">
+<div align="center">$v0 =10</div>
+
+</td>
+<td width="271">&nbsp;你懂得<img src="https://images0.cnblogs.com/blog/397633/201410/111403564522980.png" alt="" /></td>
+<td width="172">&nbsp;</td>
+</tr>
+</tbody>
+</table>
+<ul>
+<ul>
+<li><span style="color: #888888;"><span style="color: #000000;">大概意思是要打印的字符串应该有一个终止符，估计类似C中的'\0', 在这里我们只要声明字符串为<strong> .asciiz</strong> 类型即可。下面给个我用Mars4.4的提示：</span><img style="line-height: 1.5;" src="file:///C:\Users\dwky\AppData\Roaming\Tencent\Users\294677208\QQ\WinTemp\RichOle\9B]H65(%}K_NOB}CAM@Q_%G.png" alt="" /></span></li>
+<li><img src="https://images0.cnblogs.com/blog/397633/201410/111358262496633.png" alt="" /></li>
+<li>.ascii 与 .asciiz唯一区别就是 后者会在字符串最后自动加上一个终止符， 仅此而已</li>
+<li>The read_int, read_float and read_double services read an entire line of input up to and including the newline character.</li>
+<li>对于读取整型， 浮点型，双精度的数据操作， 系统会读取一整行，（也就是说以换行符为标志 '\n'）</li>
+<li><span style="color: #888888;">The read_string service has the same semantices as the UNIX library routine fgets.</span>
+<ul>
+<li><span style="color: #888888;">It reads up to n-1 characters into a buffer and terminates the string with a null character.</span></li>
+<li><span style="color: #888888;">If fewer than n-1 characters are in the current line, it reads up to and including the newline and terminates the string with a null character.</span></li>
+<li>这个不多说了，反正就是输入过长就截取，过短就这样，最后都要加一个终止符。</li>
+
+</ul>
+
+</li>
+<li><span style="color: #888888;">The sbrk service returns the address to a block of memory containing n additional bytes. This would be used for dynamic memory allocation.</span></li>
+<li>上边的表里已经说得很清楚了。</li>
+<li><span style="color: #888888;">The exit service stops a program from running.</span></li>
+<li>你懂得。。。<img src="https://images0.cnblogs.com/blog/397633/201410/111419187182036.png" alt="" /></li>
+
+</ul>
+
+</ul>
+<blockquote>
+<pre><em id="__mceDel"><span style="color: #888888;"><em id="__mceDel"><em id="__mceDel"><em id="__mceDel">e.g. Print out integer value contained in register $t2</em></em></em></span><br /></em>栗子：  打印一个存储在寄存器 $2 里的整型<em id="__mceDel"><br />
+<span style="color: #888888;">		li	$v0, 1			# load appropriate system call code into register $v0;</span><br />　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</em>声明需要调用的操作代码为 1 （print_int) 并赋值给 $v0<em id="__mceDel">
+						# code for printing integer is 1
+<span style="color: #888888;">		move	$a0, $t2		# move integer to be printed into $a0:  $a0 = $t2</span><br />　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</em>将要打印的整型赋值给 $a0<em id="__mceDel"><span style="color: #888888;">
+		syscall				# call operating system to perform operation</span><br />
+
+<span style="color: #888888;">e.g.   Read integer value, store in RAM location with label int_value (presumably declared in data section)</span><br /></em>栗子：  读取一个数，并且存储到内存中的 int_value 变量中<em id="__mceDel"><br />
+		<span style="color: #888888;">li	$v0, 5			# load appropriate system call code into register $v0;
+						# code for reading integer is 5</span><br />　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</em>声明需要调用的操作代码为 5 （read_int) 并赋值给 $v0　<em id="__mceDel"><span style="color: #888888;">
+		syscall				# call operating system to perform operation、</span><br />　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</em>经过读取操作后， $v0 的值已经变成了 输入的 5<em id="__mceDel"><span style="color: #888888;">
+		sw	$v0, int_value		# value read from keyboard returned in register $v0;
+						# store this in desired location</span><br />　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</em>通过写入（store_word)指令 将 $v0的值（5） 存入 内存中　<em id="__mceDel">　　　　　　　　
+
+<span style="color: #888888;">e.g.   Print out string (useful for prompts)</span><br /></em>栗子：  打印一个字符串(这是完整的，其实上面栗子都可以直接替换main: 部分，都能直接运行)<em id="__mceDel"><span style="color: #888888;">
+
+		.data
+string1		.asciiz	"Print this.\n"		# declaration for string variable, 
+						# .asciiz directive makes string null terminated
+
+		.text
+main:		li	$v0, 4			# load appropriate system call code into register $v0;
+						# code for printing string is 4</span><br />　　　　　　　　　　　　　　　　　　　　　　　　　　　　  </em>打印字符串， 赋值对应的操作代码 $v0 = 4<em id="__mceDel"><span style="color: #888888;">
+		la	$a0, string1		# load address of string to be printed into $a0</span><br />　　　　　　　　　　　　　　　　　　　　　　　　　　　　　</em>将要打印的字符串地址赋值  $a0 = address(string1)<em id="__mceDel"><span style="color: #888888;">
+		syscall				# call operating system to perform print operation
+</span><br /><span style="color: #888888;">
+<span style="text-decoration: underline;">e.g.</span> To indicate end of program, use <strong>exit</strong> system call; thus last lines of program should be:</span><br /></em>执行到这里， 程序结束， 立马走人， 管他后边洪水滔天~~<em id="__mceDel"><span style="color: #888888;">
+
+		li	$v0, 10		　　　　 # system call code for exit = 10
+		syscall				# call operating sys</span><br /><br />-------------------------------------------------</em><strong><span style="color: #c0c0c0; font-size: 14px;">我是那个分呀分呀分割线</span></strong><em id="__mceDel" style="line-height: 1.5;"></em><em style="line-height: 1.5;">--------------------------------------------------------------------------</em></pre>
+<pre><em><br /></em><span style="color: #c0c0c0;"><strong><span style="font-size: 16px;">OK, 十分轻松又愉快的MIPS入门之旅到此告一段落， 下面我把用到的一些软件和这篇文章的原文链接贴到下边，有需要的， 各位客官自取哈~~~</span></strong></span><br /><br /><span style="font-size: 16px;"><strong>1.<a title="MARS MIPS simulator--Missouri State University" href="http://courses.missouristate.edu/KenVollmar/MARS/" target="_blank">Mars4.4</a></strong></span><br /><span style="font-size: 16px;"><strong>2.<a title="SPIM MIPS Simulator" href="http://pages.cs.wisc.edu/~larus/spim.html" target="_blank">PCSpim Simulator</a></strong></span><br /><span style="font-size: 16px;"><strong>3.<a title="《MIPS Quick Tutorial 原文》" href="http://logos.cs.uic.edu/366/notes/mips%20quick%20tutorial.htm#IOSystemCalls" target="_blank">《MIPS Qucik Tutorial》<br /><br /></a></strong></span></pre>
+<pre><strong>你都看到这里了， 难道还怕点那么一个赞么~~~~~  <img src="https://images0.cnblogs.com/blog/397633/201410/111451328589059.jpg" alt="" /></strong></pre>
+<pre><br /><br />
+</pre>
+</blockquote></div><div id="MySignature"></div>
+<div class="clear"></div>
+<div id="blog_post_info_block">
+<div id="BlogPostCategory"></div>
+<div id="EntryTag"></div>
+<div id="blog_post_info">
+</div>
+<div class="clear"></div>
+<div id="post_next_prev"></div>
+</div>
+
+
+		</div>
+		<p class="postfoot">
+			posted on <span id="post-date">2014-10-11 14:47</span> <a href='http://www.cnblogs.com/thoupin/'>thoupin</a> 阅读(<span id="post_view_count">...</span>) 评论(<span id="post_comment_count">...</span>)  <a href ="https://i.cnblogs.com/EditPosts.aspx?postid=4018455" rel="nofollow">编辑</a> <a href="#" onclick="AddToWz(4018455);return false;">收藏</a>
+		</p>
+	</div>
+	<script type="text/javascript">var allowComments=true,cb_blogId=116653,cb_entryId=4018455,cb_blogApp=currentBlogApp,cb_blogUserGuid='cc034607-df83-e111-aa3f-842b2b196315',cb_entryCreatedDate='2014/10/11 14:47:00';loadViewCount(cb_entryId);var cb_postType=1;</script>
+	
+	</div><a name="!comments"></a><div id="blog-comments-placeholder"></div><script type="text/javascript">var commentManager = new blogCommentManager();commentManager.renderComments(0);</script>
+<div id='comment_form' class='commentform'>
+<a name='commentform'></a>
+<div id='divCommentShow'></div>
+<div id='comment_nav'><span id='span_refresh_tips'></span><a href='javascript:void(0);' onclick='return RefreshCommentList();' id='lnk_RefreshComments' runat='server' clientidmode='Static'>刷新评论</a><a href='#' onclick='return RefreshPage();'>刷新页面</a><a href='#top'>返回顶部</a></div>
+<div id='comment_form_container'></div>
+<div class='ad_text_commentbox' id='ad_text_under_commentbox'></div>
+<div id='ad_t2'></div>
+<div id='opt_under_post'></div>
+<div id='cnblogs_c1' class='c_ad_block'></div>
+<div id='under_post_news'></div>
+<div id='cnblogs_c2' class='c_ad_block'></div>
+<div id='under_post_kb'></div>
+<div id='HistoryToday' class='c_ad_block'></div>
+<script type='text/javascript'>
+    fixPostBody();
+    setTimeout(function () { incrementViewCount(cb_entryId); }, 50);
+    deliverAdT2();
+    deliverAdC1();
+    deliverAdC2();    
+    loadNewsAndKb();
+    loadBlogSignature();
+    LoadPostInfoBlock(cb_blogId, cb_entryId, cb_blogApp, cb_blogUserGuid);
+    GetPrevNextPost(cb_entryId, cb_blogId, cb_entryCreatedDate, cb_postType);
+    loadOptUnderPost();
+    GetHistoryToday(cb_blogId, cb_blogApp, cb_entryCreatedDate);   
+</script>
+</div>
+
+
+</div>
+</div>
+<div id="leftmenu">
+
+
+<h3>导航</h3>
+<ul>
+<li>
+<a id="blog_nav_sitehome" href="http://www.cnblogs.com/">博客园</a></li>
+<li>
+<a id="blog_nav_myhome" class="two_words" href="http://www.cnblogs.com/thoupin/">首页</a></li>
+<li>
+<a id="blog_nav_newpost" rel="nofollow" href="https://i.cnblogs.com/EditPosts.aspx?opt=1">新随笔</a></li>
+<li>
+<a id="blog_nav_contact" accesskey="9" class="two_words" rel="nofollow" href="https://msg.cnblogs.com/send/thoupin">联系</a></li>
+<li>
+<a id="blog_nav_rss" class="two_words" href="http://www.cnblogs.com/thoupin/rss">订阅</a>
+<a id="blog_nav_rss_image" href="http://www.cnblogs.com/thoupin/rss"><img src="//www.cnblogs.com/images/xml.gif" alt="订阅" /></a>
+</li>
+<li>
+<a id="blog_nav_admin" class="two_words" rel="nofollow" href="https://i.cnblogs.com/">管理</a></li>
+</ul>
+
+<div id="blog-calendar" style="display:none"></div><script type="text/javascript">loadBlogDefaultCalendar();</script>
+<meta name="vs_showGrid" content="False">
+
+<h3>公告</h3>
+<div id="blog-news"></div><script type="text/javascript">loadBlogNews();</script>
+
+<div id="blog-sidecolumn"></div><script type="text/javascript">loadBlogSideColumn();</script>
+
+</div>
+</div>
+<div class="clear"></div>
+<div id="footer">
+
+<p id="footer">
+	Powered by: 
+	<br />
+	
+	<a id="Footer1_Hyperlink3" NAME="Hyperlink1" href="http://www.cnblogs.com/" style="font-family:Verdana;font-size:12px;">博客园</a>
+	<br />
+	Copyright &copy; thoupin
+</p>
+</div>
+</div>
+
+</body>
+</html>
